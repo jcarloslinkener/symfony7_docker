@@ -88,7 +88,7 @@ pipeline {
             steps {
                 script {
                      docker.image("symfony7").inside("--network=host") {
-                         sh 'ls'
+                        sh 'whoami'
                         sh "symfony composer install"
                     }
                 }
