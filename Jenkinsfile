@@ -78,16 +78,16 @@ pipeline {
 
     stages {
 
-        stage('Ejecutar Script') {
+        stage('build docker') {
             steps {
                 sh './dkbuild.sh' 
-                sh './dkconnect.sh'
             }
         }
 
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
+                    sh 'docker exec Symfony7 ls'
                     sh 'docker exec Symfony7 composer install'
                 }
             }
