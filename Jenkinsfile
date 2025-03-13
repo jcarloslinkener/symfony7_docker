@@ -82,7 +82,7 @@ pipeline {
             steps {
                 sh './dkbuild.sh' 
                 sh './dkconnect.sh'
-                sh './symfony-install.sh'
+                sh 'chmod +x ./symfony-install.sh && ./symfony-install.sh'
             }
         }
 
