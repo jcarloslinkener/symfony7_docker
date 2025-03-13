@@ -67,7 +67,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "Symfony7"
+        IMAGE_NAME = "symfony7"
         IMAGE_VERSION = "1.0"
     }
 
@@ -87,7 +87,7 @@ pipeline {
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
-                     docker.image("Symfony7").inside("--network=host") {
+                     docker.image("symfony7").inside("--network=host") {
                         sh "docker exec symfony7 sh -c 'cd $WORKSPACE && composer install'"
                     }
                 }
