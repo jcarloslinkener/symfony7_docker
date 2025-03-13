@@ -88,8 +88,7 @@ pipeline {
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
-                    sh 'docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}"'
-                    sh 'docker exec -it Symfony7 symfony composer install'
+                    sh 'docker exec Symfony7 symfony composer install'
                 }
             }
         }
