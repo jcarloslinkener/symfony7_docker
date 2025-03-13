@@ -88,6 +88,8 @@ pipeline {
             steps {
                 script {
                     sh 'docker exec Symfony7 ls'
+                    sh 'docker exec Symfony7 ls -la /var/www'
+                    sh 'docker exec Symfony7 ls -la /var/www/html'
                     sh 'docker exec Symfony7 composer install'
                 }
             }
