@@ -80,7 +80,7 @@ pipeline {
 
         stage('Ejecutar Script') {
             steps {
-                sh './mi_script.sh' 
+                sh './dkbuild.sh' 
             }
         }
 
