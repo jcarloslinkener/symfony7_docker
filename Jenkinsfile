@@ -88,9 +88,8 @@ pipeline {
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
-                    docker.image("php:8.2-apache").inside("--network=host") {
-                        sh 'docker exec -it Symfony7 symfony composer install'
-                    }
+                    sh 'docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}"'
+                    sh 'docker exec -it Symfony7 symfony composer install'
                 }
             }
         }
