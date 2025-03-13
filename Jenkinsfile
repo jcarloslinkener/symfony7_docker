@@ -87,10 +87,9 @@ pipeline {
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
-                    sh 'docker exec Symfony7 ls'
-                    sh 'docker exec Symfony7 ls -la /var/www'
-                    sh 'docker exec Symfony7 ls -la /var/www/html'
-                    sh 'docker exec Symfony7 composer install'
+                     docker.image("Symfony7").inside("--network=host") {
+                        sh "docker exec Symfony7 sh -c 'cd $WORKSPACE && composer install'"
+                    }
                 }
             }
         }
