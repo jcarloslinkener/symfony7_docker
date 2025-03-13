@@ -24,4 +24,4 @@ RUN apt install symfony-cli -y
 # enable apache2 modules
 RUN a2enmod rewrite
 
-RUN mkdir -p /var/www/.symfony5 && chown www-data:www-data /var/www/.symfony5
+RUN mkdir -p /var/www/.symfony5 && chmod -R 777 /var/www/.symfony5
