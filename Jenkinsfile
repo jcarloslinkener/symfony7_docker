@@ -89,7 +89,7 @@ pipeline {
                 script {
                      docker.image("symfony7").inside("--network=host") {
                          sh 'ls'
-                        sh "symfony composer install'"
+                        sh "symfony composer install"
                     }
                 }
             }
