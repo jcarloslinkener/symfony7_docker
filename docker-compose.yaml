@@ -1,5 +1,6 @@
 services:
   app:
+    image: symfony7
     build:
       context: .
       dockerfile: Dockerfile
