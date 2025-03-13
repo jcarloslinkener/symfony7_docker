@@ -81,6 +81,8 @@ pipeline {
         stage('Ejecutar Script') {
             steps {
                 sh './dkbuild.sh' 
+                sh './dkconnect.sh'
+                symfony composer install
             }
         }
 
