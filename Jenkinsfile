@@ -87,7 +87,9 @@ pipeline {
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
+                        sh 'docker images'
                      docker.image("symfony7").inside("--network=host") {
+                         sh 'docker images'
                         sh "docker exec symfony7 sh -c 'cd $WORKSPACE && composer install'"
                     }
                 }
