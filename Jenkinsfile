@@ -88,7 +88,7 @@ pipeline {
             steps {
                 script {
                      docker.image("Symfony7").inside("--network=host") {
-                        sh "docker exec Symfony7 sh -c 'cd $WORKSPACE && composer install'"
+                        sh "docker exec symfony7 sh -c 'cd $WORKSPACE && composer install'"
                     }
                 }
             }
