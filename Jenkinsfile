@@ -88,7 +88,7 @@ pipeline {
         stage('Ejecutar Symfony Composer Install') {
             steps {
                 script {
-                    sh 'docker exec Symfony7 symfony composer install'
+                    sh 'docker exec Symfony7 composer install'
                 }
             }
         }
