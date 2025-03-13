@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: "${DC_APP_NAME}"
+    restart: unless-stopped
+    container_name: "${DC_APP_NAME}" # A custom name to be used in build scripts
+    depends_on:
+      - db # requires the database service to be available
+    ports:
+      - "${DC_APP_PORT}:80" # the service will be available in my browser at http://localhost:<DC_APP_PORT>
+    volumes:
+      - .:/var/www/html # all files in current directory will also be available in the container, allowing you to update the source code with your IDE
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf:ro # Override the default apache vhost file to ensure that the symfony application is served by default
+      - ./.bashrc:/root/.bashrc:ro # Override the default apache vhost file to ensure that the symfony application is served by default
+      # the contents of 000-default.conf is obtained from https://symfony.com/doc/current/setup/web_server_configuration.html, with modifications applied to match folder locations
+    environment:
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}?serverVersion=8.0.32&charset=utf8mb4"
+
+  db: # The service name or host to the database
+    image: mysql:8.4
+    restart: unless-stopped # ensures that the service automatically runs as soon as Docker starts up
+    container_name: "${DC_APP_NAME}-db"
+    volumes:
+      - mysql_data:/var/lib/mysql # persistent volume to ensure that database changes are retained during container restarts
+    environment:
+      # I do not normally use root to log in to MySQL
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: unless-stopped
+    container_name: "${DC_APP_NAME}-pma"
+    ports:
+      - "${DC_PMA_PORT}:80" # the service will be available in my browser at http://localhost:<DC_PMA_PORT>
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db # must match the service name used for the MySQL database above
+      PMA_USER: "${MYSQL_USER}" # must match the value of MYSQL_USER above
+      PMA_PASSWORD: "${MYSQL_PASSWORD}" # must match the value of MYSQL_PASSWORD above
+
+volumes:
+  mysql_data: # the volume name used in db:volumes above
